@@ -81,7 +81,7 @@ export default function App() {
     // ✨ fix the JSX: `Spinner`, `Message`, `LoginForm`, `ArticleForm` and `Articles` expect props ❗
     <>
       <Spinner on={spinnerOn} />
-      <Message />
+      <Message message={message} />
       <button id="logout" onClick={logout}>
         Logout from app
       </button>
@@ -103,8 +103,19 @@ export default function App() {
             path="articles"
             element={
               <>
-                <ArticleForm />
-                <Articles />
+                <ArticleForm
+                  postArticle={postArticle}
+                  updateArticle={updateArticle}
+                  setCurrentArticleId={setCurrentArticleId}
+                  currentArticleId={currentArticleId}
+                />
+                <Articles
+                  articles={articles}
+                  getArticles={getArticles}
+                  deleteArticle={deleteArticle}
+                  setCurrentArticleId={setCurrentArticleId}
+                  currentArticleId={currentArticleId}
+                />
               </>
             }
           />
