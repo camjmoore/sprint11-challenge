@@ -15,7 +15,7 @@ export default function Articles(props) {
   // ✨ implement conditional logic: if no token exists
   // we should render a Navigate to login screen (React Router v.6)
   if (!localStorage.getItem('token')) {
-    return <Navigate to="/login" replace={true} />;
+    return <Navigate to="/" replace={true} />;
   }
 
   useEffect(() => {
@@ -39,10 +39,7 @@ export default function Articles(props) {
                   <p>Topic: {art.topic}</p>
                 </div>
                 <div>
-                  <button
-                    disabled={true}
-                    onClick={setCurrentArticleId(currentArticleId)}
-                  >
+                  <button disabled={true} onClick={Function.prototype}>
                     Edit
                   </button>
                   <button disabled={true} onClick={deleteArticle()}>
