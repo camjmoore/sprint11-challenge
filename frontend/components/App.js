@@ -42,7 +42,6 @@ export default function App() {
     axios
       .post(loginUrl, { username, password })
       .then((res) => {
-        console.log(res);
         localStorage.setItem('token', res.data.token);
         setMessage(res.data.message);
         setSpinnerOn(spinnerOn);
@@ -57,7 +56,7 @@ export default function App() {
     setMessage('');
     setSpinnerOn(!spinnerOn);
     // and launch an authenticated request to the proper endpoint.
-    axiosWithAuth
+    axiosWithAuth()
       .get(articlesUrl)
       .then((res) => {
         console.log(res.data);
@@ -67,8 +66,8 @@ export default function App() {
       .catch((err) => {
         console.log(err);
         //if 401 redirect to login
-        //setSpinnerOn(spinnerOn);
       });
+    setSpinnerOn(spinnerOn);
     // On success, we should set the articles in their proper state and
     // put the server success message in its proper state.
     // If something goes wrong, check the status of the response:
@@ -122,7 +121,7 @@ export default function App() {
                   postArticle={postArticle}
                   updateArticle={updateArticle}
                   setCurrentArticleId={setCurrentArticleId}
-                  currentArticleId={currentArticleId}
+                  currentArticle={currentArticleId}
                 />
                 <Articles
                   articles={articles}
