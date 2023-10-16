@@ -6,6 +6,7 @@ import Message from './Message';
 import ArticleForm from './ArticleForm';
 import Spinner from './Spinner';
 import axios from 'axios';
+import axiosWithAuth from '../axios/index';
 
 const articlesUrl = 'http://localhost:9000/api/articles';
 const loginUrl = 'http://localhost:9000/api/login';
@@ -21,7 +22,7 @@ export default function App() {
   const navigate = useNavigate();
 
   const redirectToLogin = () => {
-    navigate('/login');
+    navigate('/');
   };
 
   const redirectToArticles = () => {
@@ -29,7 +30,7 @@ export default function App() {
   };
 
   const logout = () => {
-    if (localStorage.getItem('token')) localStorage.remove('token');
+    if (localStorage.getItem('token')) localStorage.removeItem('token');
 
     setMessage('Goodbye!');
     redirectToLogin();
@@ -53,7 +54,17 @@ export default function App() {
   const getArticles = () => {
     // ✨ implement
     // We should flush the message state, turn on the spinner
+    setMessage('');
+    setSpinnerOn(!spinnerOn);
     // and launch an authenticated request to the proper endpoint.
+    axiosWithAuth
+      .get(articlesUrl)
+      .then((res) => {
+        console.log(res.data);
+        setArticles(res.data.articles);
+        setMessage(res.data.message);
+      })
+      .catch((err) => console.log(err));
     // On success, we should set the articles in their proper state and
     // put the server success message in its proper state.
     // If something goes wrong, check the status of the response:
