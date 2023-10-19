@@ -22,7 +22,7 @@ export default function App() {
   const navigate = useNavigate();
 
   const redirectToLogin = () => {
-    navigate('/login');
+    navigate('/');
   };
 
   const redirectToArticles = () => {
@@ -30,8 +30,7 @@ export default function App() {
   };
 
   const logout = () => {
-    if (localStorage.getItem('token')) localStorage.remove('token');
-
+    if (localStorage.getItem('token')) localStorage.removeItem('token');
     setMessage('Goodbye!');
     redirectToLogin();
   };
@@ -59,13 +58,14 @@ export default function App() {
     axiosWithAuth()
       .get(articlesUrl)
       .then((res) => {
-        console.log(res.data);
         setArticles(res.data.articles);
         setMessage(res.data.message);
       })
       .catch((err) => {
-        console.log(err);
         //if 401 redirect to login
+        setSpinnerOn(!spinnerOn);
+        setSpinnerOn(spinnerOn);
+        if (err.response.status === 401) redirectToLogin();
       });
     setSpinnerOn(spinnerOn);
     // On success, we should set the articles in their proper state and
@@ -77,6 +77,9 @@ export default function App() {
 
   const postArticle = (article) => {
     // ✨ implement
+    axiosWithAuth.post(articlesUrl, article).then((res) => {
+      console.log(res.data);
+    });
     // The flow is very similar to the `getArticles` function.
     // You'll know what to do! Use log statements or breakpoints
     // to inspect the response from the server.
@@ -121,14 +124,15 @@ export default function App() {
                   postArticle={postArticle}
                   updateArticle={updateArticle}
                   setCurrentArticleId={setCurrentArticleId}
-                  currentArticle={currentArticleId}
+                  currentArticle={articles.find(
+                    (article) => article.article_id == currentArticleId
+                  )}
                 />
                 <Articles
                   articles={articles}
                   getArticles={getArticles}
                   deleteArticle={deleteArticle}
                   setCurrentArticleId={setCurrentArticleId}
-                  currentArticleId={currentArticleId}
                 />
               </>
             }
