@@ -84,3 +84,9 @@ You must also also test the Spinner component in this module:
 ## MVP Short Explanation
 
 ❗ ALL TESTS MUST PASS
+
+## Lessons Learned
+
+- Dont forget button types on forms, type="submit" and type="button", or else you will make unintended function calls
+
+- Dont forget to return setState hooks from with conditional logic blocks, or they will not be called in the intended scope

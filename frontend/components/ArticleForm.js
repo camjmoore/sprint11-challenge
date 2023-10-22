@@ -35,10 +35,11 @@ export default function ArticleForm(props) {
 
     if (!currentArticle) {
       postArticle(values);
+      return setValues(initialFormValues);
     } else {
-      updateArticle(currentArticle.article_id, values);
+      updateArticle({ article_id: currentArticle.article_id, article: values });
+      return setValues(initialFormValues);
     }
-    setValues(initialFormValues);
   };
 
   const isDisabled = () => {

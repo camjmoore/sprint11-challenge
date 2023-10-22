@@ -90,10 +90,17 @@ export default function App() {
     setSpinnerOn(!spinnerOn);
 
     axiosWithAuth()
-      .post(`http://localhost:9000/api/articles/:${article_id}`, article)
+      .put(`${articlesUrl}/${article_id}`, article)
       .then((res) => {
-        console.log(res.data);
-        // setArticles([...articles, res.data.article]);
+        const newArticle = res.data.article;
+
+        const updatedArticles = articles.map((article) => {
+          return article.article_id === newArticle.article_id
+            ? newArticle
+            : article;
+        });
+
+        setArticles(updatedArticles);
         setMessage(res.data.message);
         setSpinnerOn(spinnerOn);
       })
