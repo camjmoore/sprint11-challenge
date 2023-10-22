@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react';
-import { Navigate } from 'react-router-dom';
-import PT from 'prop-types';
+import React, { useEffect } from "react";
+import { Navigate } from "react-router-dom";
+import PT from "prop-types";
 
 export default function Articles(props) {
   // ✨ where are my props? Destructure them here
@@ -14,7 +14,7 @@ export default function Articles(props) {
 
   // ✨ implement conditional logic: if no token exists
   // we should render a Navigate to login screen (React Router v.6)
-  if (!localStorage.getItem('token')) {
+  if (!localStorage.getItem("token")) {
     return <Navigate to="/" replace={true} />;
   }
 
@@ -23,14 +23,13 @@ export default function Articles(props) {
     getArticles();
   }, []);
 
-
   return (
     // ✨ fix the JSX: replace `Function.prototype` with actual functions
     // and use the articles prop to generate articles
     <div className="articles">
       <h2>Articles</h2>
       {!articles.length
-        ? 'No articles yet'
+        ? "No articles yet"
         : articles.map((art) => {
             return (
               <div className="article" key={art.article_id}>

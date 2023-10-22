@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import PT from 'prop-types';
+import React, { useEffect, useState } from "react";
+import PT from "prop-types";
 
-const initialFormValues = { title: '', text: '', topic: '' };
+const initialFormValues = { title: "", text: "", topic: "" };
 
 export default function ArticleForm(props) {
   const [values, setValues] = useState(initialFormValues);
@@ -32,14 +32,13 @@ export default function ArticleForm(props) {
 
   const onSubmit = (evt) => {
     evt.preventDefault();
-    // ✨ implement
+
     if (!currentArticle) {
-      postArticle(currentArticle);
+      postArticle(values);
     } else {
-      updateArticle(currentArticle.article_id, currentArticle);
+      updateArticle(currentArticle.article_id, values);
     }
-    // We must submit a new post or update an existing one,
-    // depending on the truthyness of the `currentArticle` prop.
+    setValues(initialFormValues);
   };
 
   const isDisabled = () => {
@@ -48,9 +47,9 @@ export default function ArticleForm(props) {
     let validText =
       values.title.trim().length >= 1 && values.text.trim().length >= 1;
     let validTopic =
-      values.topic === 'React' ||
-      values.topic === 'JavaScript' ||
-      values.topic === 'Node';
+      values.topic === "React" ||
+      values.topic === "JavaScript" ||
+      values.topic === "Node";
     return validText && validTopic;
   };
 
@@ -80,10 +79,16 @@ export default function ArticleForm(props) {
         <option value="Node">Node</option>
       </select>
       <div className="button-group">
-        <button disabled={!isDisabled()} id="submitArticle">
+        <button type="submit" disabled={!isDisabled()} id="submitArticle">
           Submit
         </button>
-        <button onClick={() => { setValues(initialFormValues); setCurrentArticleId(undefined)}}>
+        <button
+          type="button"
+          onClick={() => {
+            setValues(initialFormValues);
+            setCurrentArticleId(null);
+          }}
+        >
           Cancel edit
         </button>
       </div>
