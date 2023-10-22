@@ -19,7 +19,7 @@ export default function ArticleForm(props) {
           text: currentArticle.text,
           topic: currentArticle.topic,
         })
-      : setValues(values);
+      : setValues(initialFormValues);
 
     // if it's truthy, we should set its title, text and topic into the corresponding
     // values of the form. If it's not, we should reset the form back to initial values.
@@ -83,7 +83,7 @@ export default function ArticleForm(props) {
         <button disabled={!isDisabled()} id="submitArticle">
           Submit
         </button>
-        <button onClick={() => setValues(initialFormValues)}>
+        <button onClick={() => { setValues(initialFormValues); setCurrentArticleId(undefined)}}>
           Cancel edit
         </button>
       </div>

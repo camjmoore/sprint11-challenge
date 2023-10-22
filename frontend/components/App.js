@@ -58,21 +58,15 @@ export default function App() {
     axiosWithAuth()
       .get(articlesUrl)
       .then((res) => {
+        setSpinnerOn(spinnerOn);
         setArticles(res.data.articles);
         setMessage(res.data.message);
       })
       .catch((err) => {
         //if 401 redirect to login
-        setSpinnerOn(!spinnerOn);
         setSpinnerOn(spinnerOn);
         if (err.response.status === 401) redirectToLogin();
       });
-    setSpinnerOn(spinnerOn);
-    // On success, we should set the articles in their proper state and
-    // put the server success message in its proper state.
-    // If something goes wrong, check the status of the response:
-    // if it's a 401 the token might have gone bad, and we should redirect to login.
-    // Don't forget to turn off the spinner!
   };
 
   const postArticle = (article) => {
@@ -133,6 +127,7 @@ export default function App() {
                   getArticles={getArticles}
                   deleteArticle={deleteArticle}
                   setCurrentArticleId={setCurrentArticleId}
+                  currentArticleId={currentArticleId}
                 />
               </>
             }
