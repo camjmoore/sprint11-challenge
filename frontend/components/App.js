@@ -1,18 +1,18 @@
-import React, { useState, useEffect } from "react";
-import { NavLink, Routes, Route, useNavigate } from "react-router-dom";
-import Articles from "./Articles";
-import LoginForm from "./LoginForm";
-import Message from "./Message";
-import ArticleForm from "./ArticleForm";
-import Spinner from "./Spinner";
-import { axiosWithAuth } from "../axios";
-import axios from "axios";
+import React, { useState, useEffect } from 'react';
+import { NavLink, Routes, Route, useNavigate } from 'react-router-dom';
+import Articles from './Articles';
+import LoginForm from './LoginForm';
+import Message from './Message';
+import ArticleForm from './ArticleForm';
+import Spinner from './Spinner';
+import { axiosWithAuth } from '../axios';
+import axios from 'axios';
 
-const articlesUrl = "http://localhost:9000/api/articles";
-const loginUrl = "http://localhost:9000/api/login";
+const articlesUrl = 'http://localhost:9000/api/articles';
+const loginUrl = 'http://localhost:9000/api/login';
 
 export default function App() {
-  const [message, setMessage] = useState("");
+  const [message, setMessage] = useState('');
   const [articles, setArticles] = useState([]);
   const [currentArticleId, setCurrentArticleId] = useState();
   const [spinnerOn, setSpinnerOn] = useState(false);
@@ -24,35 +24,35 @@ export default function App() {
   );
 
   const redirectToLogin = () => {
-    navigate("/");
+    navigate('/');
   };
 
   const redirectToArticles = () => {
-    navigate("/articles");
+    navigate('/articles');
   };
 
   const logout = () => {
-    if (localStorage.getItem("token")) localStorage.removeItem("token");
-    setMessage("Goodbye!");
+    if (localStorage.getItem('token')) localStorage.removeItem('token');
+    setMessage('Goodbye!');
     redirectToLogin();
   };
 
   const login = ({ username, password }) => {
-    setMessage("");
+    setMessage('');
     setSpinnerOn(!spinnerOn);
     axios
       .post(loginUrl, { username, password })
       .then((res) => {
-        localStorage.setItem("token", res.data.token);
+        localStorage.setItem('token', res.data.token);
         setMessage(res.data.message);
         setSpinnerOn(spinnerOn);
-        navigate("/articles");
+        navigate('/articles');
       })
       .catch((err) => console.log(err));
   };
 
   const getArticles = () => {
-    setMessage("");
+    setMessage('');
     setSpinnerOn(!spinnerOn);
 
     axiosWithAuth()
@@ -69,7 +69,7 @@ export default function App() {
   };
 
   const postArticle = (article) => {
-    setMessage("");
+    setMessage('');
     setSpinnerOn(!spinnerOn);
 
     axiosWithAuth()
@@ -77,6 +77,7 @@ export default function App() {
       .then((res) => {
         setArticles([...articles, res.data.article]);
         setMessage(res.data.message);
+        setCurrentArticleId(undefined);
         setSpinnerOn(spinnerOn);
       })
       .catch((err) => {
@@ -86,7 +87,7 @@ export default function App() {
   };
 
   const updateArticle = ({ article_id, article }) => {
-    setMessage("");
+    setMessage('');
     setSpinnerOn(!spinnerOn);
 
     axiosWithAuth()
@@ -102,6 +103,7 @@ export default function App() {
 
         setArticles(updatedArticles);
         setMessage(res.data.message);
+        setCurrentArticleId(undefined);
         setSpinnerOn(spinnerOn);
       })
       .catch((err) => {
@@ -122,8 +124,8 @@ export default function App() {
       <button id="logout" onClick={logout}>
         Logout from app
       </button>
-      <div id="wrapper" style={{ opacity: spinnerOn ? "0.25" : "1" }}>
-        {" "}
+      <div id="wrapper" style={{ opacity: spinnerOn ? '0.25' : '1' }}>
+        {' '}
         {/* <-- do not change this line */}
         <h1>Advanced Web Applications</h1>
         <nav>
