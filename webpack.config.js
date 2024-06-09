@@ -33,6 +33,7 @@ const config = {
   plugins: [
     new HtmlWebpackPlugin({
       template: INDEX_HTML_PATH,
+      filename: 'index.html'
     }),
   ],
   devServer: {
