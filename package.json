@@ -4,7 +4,6 @@
   "scripts": {
     "dev": "fkill :9000 :3000 -s && concurrently \"npm:backend\" \"npm:frontend\"",
     "test": "cross-env NODE_ENV=testing jest --watch",
-    "build": "npm run webpack",
     "webpack": "cross-env NODE_ENV=production webpack",
     "frontend": "webpack serve --open",
     "backend": "node index.js",
